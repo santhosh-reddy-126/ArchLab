@@ -1,0 +1,14 @@
+logging:
+  level: INFO
+  loggers:
+    com.example.ArchLab: DEBUG
+
+neo4j:
+  uri: bolt://localhost:7687
+  username: neo4j
+  password: ${NEO4J_PASSWORD}
+
+elasticsearch:
+  host: localhost
+  port: 9200
+  scheme: http
