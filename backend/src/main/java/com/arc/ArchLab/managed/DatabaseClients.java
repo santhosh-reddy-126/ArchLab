@@ -1,10 +1,10 @@
-package com.example.ArchLab.managed;
+package com.arc.ArchLab.managed;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
-import com.example.ArchLab.ArchLabConfiguration;
+import com.arc.ArchLab.ArchLabConfiguration;
 import io.dropwizard.lifecycle.Managed;
 import lombok.Getter;
 import org.apache.http.HttpHost;

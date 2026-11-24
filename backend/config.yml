@@ -1,7 +1,10 @@
 logging:
   level: INFO
   loggers:
-    com.example.ArchLab: DEBUG
+    com.arc.ArchLab: DEBUG
+
+swagger:
+  resourcePackage: com.arc.ArchLab.resources
 
 neo4j:
   uri: bolt://localhost:7687

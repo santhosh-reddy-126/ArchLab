@@ -1,6 +1,8 @@
-package com.example.ArchLab;
+package com.arc.ArchLab;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.core.Configuration;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,9 @@ public class ArchLabConfiguration extends Configuration {
         @Valid
         @NotNull
         private ElasticsearchConfig elasticsearch;
+
+        @JsonProperty("swagger")
+        public SwaggerBundleConfiguration swaggerBundleConfiguration;
 
         public Neo4jConfig getNeo4j() {
                 return neo4j;

@@ -1,15 +1,14 @@
-package com.example.ArchLab;
+package com.arc.ArchLab;
 
+import com.arc.ArchLab.managed.DatabaseClients;
+import com.arc.ArchLab.resources.HelloResource;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
-import com.example.ArchLab.managed.DatabaseClients;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 public class ArchLabApplication extends Application<ArchLabConfiguration> {
     public static void main(String[] args) throws Exception {
@@ -25,9 +24,22 @@ public class ArchLabApplication extends Application<ArchLabConfiguration> {
                 bootstrap.getConfigurationSourceProvider(),
                 new EnvironmentVariableSubstitutor(true)
         ));
+
+        bootstrap.addBundle(new SwaggerBundle<ArchLabConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ArchLabConfiguration configuration) {
+                return configuration.swaggerBundleConfiguration;
+            }
+        });
     }
     @Override
     public void run(ArchLabConfiguration configuration, Environment environment) {
+        registerResources(configuration, environment);
         environment.lifecycle().manage(new DatabaseClients(configuration));
+    }
+
+
+    public void registerResources(ArchLabConfiguration configuration, Environment environment){
+        environment.jersey().register(new HelloResource());
     }
 }
