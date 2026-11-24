@@ -1,5 +1,6 @@
 package com.arc.ArchLab;
 
+import com.arc.ArchLab.exceptions.ArchExceptionMapper;
 import com.arc.ArchLab.managed.DatabaseClients;
 import com.arc.ArchLab.resources.HelloResource;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -41,5 +42,7 @@ public class ArchLabApplication extends Application<ArchLabConfiguration> {
 
     public void registerResources(ArchLabConfiguration configuration, Environment environment){
         environment.jersey().register(new HelloResource());
+        environment.jersey()
+                .register(new ArchExceptionMapper());
     }
 }
