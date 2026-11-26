@@ -1,6 +1,7 @@
 package com.arc.ArchLab;
 
 import com.arc.ArchLab.exceptions.ArchExceptionMapper;
+import com.arc.ArchLab.filters.CorsFilter;
 import com.arc.ArchLab.managed.DatabaseClients;
 import com.arc.ArchLab.repository.UserRepository;
 import com.arc.ArchLab.resources.AuthResource;
@@ -51,6 +52,7 @@ public class ArchLabApplication extends Application<ArchLabConfiguration> {
 
         environment.jersey().register(new HelloResource());
         environment.jersey().register(new AuthResource(authService));
+        environment.jersey().register(new CorsFilter());
         environment.jersey()
                 .register(new ArchExceptionMapper());
     }
