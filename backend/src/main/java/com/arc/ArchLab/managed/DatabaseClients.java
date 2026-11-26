@@ -24,6 +24,24 @@ public class DatabaseClients implements Managed {
 
     public DatabaseClients(ArchLabConfiguration config) {
         this.config = config;
+
+        var es = config.getElasticsearch();
+        restClient = RestClient.builder(
+                new HttpHost(
+                        es.getHost(),
+                        es.getPort(),
+                        es.getScheme()
+                )
+        ).build();
+        transport = new RestClientTransport(
+                restClient,
+                new JacksonJsonpMapper()
+        );
+        elasticsearchClient = new ElasticsearchClient(transport);
+    }
+
+    public ElasticsearchClient getElasticsearchClient() {
+        return elasticsearchClient;
     }
 
     @Override
@@ -41,25 +59,6 @@ public class DatabaseClients implements Managed {
         );
 
         neo4jDriver.verifyConnectivity();
-
-        // Elasticsearch initialization
-        var es = config.getElasticsearch();
-
-        restClient = RestClient.builder(
-                new HttpHost(
-                        es.getHost(),
-                        es.getPort(),
-                        es.getScheme()
-                )
-        ).build();
-
-        transport = new RestClientTransport(
-                restClient,
-                new JacksonJsonpMapper()
-        );
-
-        elasticsearchClient =
-                new ElasticsearchClient(transport);
     }
 
     @Override
