@@ -64,7 +64,7 @@ Open `http://localhost:5173`. The UI calls the API at `http://localhost:8080` by
 | `http://localhost:8080/api/v1/hello` | Health check |
 | `http://localhost:8080/api/v1/auth/signUp` | Sign up |
 | `http://localhost:8080/api/v1/auth/login` | Sign in |
-| `http://localhost:8080/swagger-ui` | Swagger UI |
+| `http://localhost:8080/` | Swagger UI (default URI prefix is root) |
 | `http://localhost:9200` | Elasticsearch |
 
 The backend allows requests from `http://localhost:5173` and `http://localhost:3000`. Set `CORS_ALLOWED_ORIGINS` to a comma-separated list to change this.
