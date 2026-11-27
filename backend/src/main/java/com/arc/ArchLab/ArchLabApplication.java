@@ -3,11 +3,16 @@ package com.arc.ArchLab;
 import com.arc.ArchLab.exceptions.ArchExceptionMapper;
 import com.arc.ArchLab.filters.CorsFilter;
 import com.arc.ArchLab.managed.DatabaseClients;
+import com.arc.ArchLab.repository.GraphMetaRepository;
+import com.arc.ArchLab.repository.GraphRepository;
 import com.arc.ArchLab.repository.UserRepository;
 import com.arc.ArchLab.resources.AuthResource;
+import com.arc.ArchLab.resources.GraphResource;
 import com.arc.ArchLab.resources.HelloResource;
 import com.arc.ArchLab.services.contracts.AuthService;
+import com.arc.ArchLab.services.contracts.GraphService;
 import com.arc.ArchLab.services.impl.AuthServiceImpl;
+import com.arc.ArchLab.services.impl.GraphServiceImpl;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.core.Application;
@@ -48,6 +53,9 @@ public class ArchLabApplication extends Application<ArchLabConfiguration> {
 
     public void registerResources(DatabaseClients databaseClients, Environment environment){
         UserRepository userRepository = new UserRepository(databaseClients.getElasticsearchClient());
+        GraphRepository graphRepository = new GraphRepository(databaseClients.getNeo4jDriver());
+        GraphMetaRepository graphMetaRepository = new GraphMetaRepository(databaseClients.getElasticsearchClient());
+        GraphService graphService = new GraphServiceImpl(graphMetaRepository, graphRepository);
         AuthService authService = new AuthServiceImpl(userRepository);
 
         environment.jersey().register(new HelloResource());
@@ -55,5 +63,6 @@ public class ArchLabApplication extends Application<ArchLabConfiguration> {
         environment.jersey().register(new CorsFilter());
         environment.jersey()
                 .register(new ArchExceptionMapper());
+        environment.jersey().register(new GraphResource(graphService));
     }
 }

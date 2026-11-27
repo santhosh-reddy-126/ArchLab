@@ -14,19 +14,15 @@ import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 
 public class DatabaseClients implements Managed {
-    private final ArchLabConfiguration config;
-
     @Getter
     private Driver neo4jDriver;
-    private RestClient restClient;
-    private ElasticsearchTransport transport;
+    private final ElasticsearchTransport transport;
+    @Getter
     private ElasticsearchClient elasticsearchClient;
 
     public DatabaseClients(ArchLabConfiguration config) {
-        this.config = config;
-
         var es = config.getElasticsearch();
-        restClient = RestClient.builder(
+        RestClient restClient = RestClient.builder(
                 new HttpHost(
                         es.getHost(),
                         es.getPort(),
@@ -38,18 +34,8 @@ public class DatabaseClients implements Managed {
                 new JacksonJsonpMapper()
         );
         elasticsearchClient = new ElasticsearchClient(transport);
-    }
 
-    public ElasticsearchClient getElasticsearchClient() {
-        return elasticsearchClient;
-    }
-
-    @Override
-    public void start() throws Exception {
-
-        // Neo4j initialization
         var neo = config.getNeo4j();
-
         neo4jDriver = GraphDatabase.driver(
                 neo.getUri(),
                 AuthTokens.basic(
@@ -57,7 +43,10 @@ public class DatabaseClients implements Managed {
                         neo.getPassword()
                 )
         );
+    }
 
+    @Override
+    public void start() throws Exception {
         neo4jDriver.verifyConnectivity();
     }
 
