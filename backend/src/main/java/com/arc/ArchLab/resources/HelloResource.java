@@ -1,5 +1,11 @@
 package com.arc.ArchLab.resources;
 
+import com.arc.ArchLab.JWT.UserPrincipal;
+import io.dropwizard.auth.Auth;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.ws.rs.Consumes;
@@ -14,10 +20,17 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Tag(name = "Hello Resource", description = "Say Hello")
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
 public class HelloResource {
 
     @GET
-    public Response sayHello(){
+    @SecurityRequirement(name = "bearerAuth")
+    public Response sayHello(@Parameter(hidden = true) @Auth UserPrincipal user){
         return Response.ok().entity(Map.of("message","Welcome to Archlab!")).build();
     }
 }
