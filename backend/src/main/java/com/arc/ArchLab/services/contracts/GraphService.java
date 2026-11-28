@@ -5,5 +5,5 @@ import com.arc.ArchLab.model.GraphMeta;
 
 public interface GraphService {
 
-    GraphMeta createGraphMetaData(GraphMetaRequest graphMetaRequest);
+    GraphMeta createGraphMetaData(GraphMetaRequest graphMetaRequest, String userid);
 }

@@ -23,11 +23,11 @@ public class GraphServiceImpl implements GraphService {
     private final GraphRepository graphRepository;
 
     @Override
-    public GraphMeta createGraphMetaData(GraphMetaRequest graphMetaRequest){
+    public GraphMeta createGraphMetaData(GraphMetaRequest graphMetaRequest, String userId){
         try{
             String neoGraphId = UUID.randomUUID().toString();
             graphRepository.createGraph(neoGraphId);
-            GraphMetaDTO graphDTO = GraphMetaMapper.toGraphMetaDTO(graphMetaRequest, neoGraphId);
+            GraphMetaDTO graphDTO = GraphMetaMapper.toGraphMetaDTO(graphMetaRequest, neoGraphId, userId);
             String id = graphMetaRepository.save(graphDTO);
             return GraphMetaMapper.toGraphMeta(graphDTO, id);
         }catch (IOException ioException){

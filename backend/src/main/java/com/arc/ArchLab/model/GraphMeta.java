@@ -17,6 +17,9 @@ public class GraphMeta {
     private String id;
 
     @NotNull
+    private String userId;
+
+    @NotNull
     private String title;
 
     @NotNull

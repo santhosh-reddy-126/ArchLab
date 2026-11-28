@@ -4,7 +4,6 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.arc.ArchLab.constants.ESIndexes;
 import com.arc.ArchLab.dao.request.UserRequest;
 import com.arc.ArchLab.model.User;
@@ -41,7 +40,10 @@ public class UserRepository {
     public Optional<User> getByUserName(String userName) throws IOException{
         SearchResponse<User> userSearchResponse = client.search(s -> s.index(ESIndexes.USERS_INDEX).query(q -> q.term(t -> t.field("username").value(userName))), User.class);
         return userSearchResponse.hits().hits().stream()
-                .map(Hit::source)
+                .map(hit -> {
+                    User source = hit.source();
+                    return source == null ? null : new User(hit.id(), source.getUsername(), source.getPassword());
+                })
                 .filter(Objects::nonNull)
                 .findFirst();
     }

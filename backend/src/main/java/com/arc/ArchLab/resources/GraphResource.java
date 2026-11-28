@@ -42,6 +42,6 @@ public class GraphResource {
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Create a graph")
     public Response createGraph(@Parameter(hidden = true) @Auth UserPrincipal user, @Valid GraphMetaRequest graphMetaRequest){
-        return Response.status(200).entity(graphService.createGraphMetaData(graphMetaRequest)).build();
+        return Response.status(200).entity(graphService.createGraphMetaData(graphMetaRequest, user.getUserId())).build();
     }
 }

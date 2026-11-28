@@ -17,6 +17,9 @@ public class GraphMetaDTO {
     private String title;
 
     @NotNull
+    private String userId;
+
+    @NotNull
     private String description;
 
     @NotNull
