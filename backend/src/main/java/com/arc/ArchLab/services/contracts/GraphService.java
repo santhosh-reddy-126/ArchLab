@@ -1,9 +1,9 @@
 package com.arc.ArchLab.services.contracts;
 
-import com.arc.ArchLab.dao.request.GraphRequest;
-import com.arc.ArchLab.model.Graph;
+import com.arc.ArchLab.dao.request.GraphMetaRequest;
+import com.arc.ArchLab.model.GraphMeta;
 
 public interface GraphService {
 
-    Graph createGraphMetaData(GraphRequest graphRequest);
+    GraphMeta createGraphMetaData(GraphMetaRequest graphMetaRequest);
 }

@@ -1,6 +1,6 @@
 package com.arc.ArchLab;
 
-import com.arc.ArchLab.JWT.JWTAuthenticator;
+import com.arc.ArchLab.JWT.JwtAuthenticator;
 import com.arc.ArchLab.JWT.UserPrincipal;
 import com.arc.ArchLab.exceptions.ArchExceptionMapper;
 import com.arc.ArchLab.filters.CorsFilter;
@@ -16,6 +16,7 @@ import com.arc.ArchLab.services.contracts.GraphService;
 import com.arc.ArchLab.services.impl.AuthServiceImpl;
 import com.arc.ArchLab.services.impl.GraphServiceImpl;
 import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -62,15 +63,14 @@ public class ArchLabApplication extends Application<ArchLabConfiguration> {
         GraphService graphService = new GraphServiceImpl(graphMetaRepository, graphRepository);
         AuthService authService = new AuthServiceImpl(userRepository);
 
-        environment.jersey().register(
-                new AuthDynamicFeature(
-                        new OAuthCredentialAuthFilter.Builder<UserPrincipal>()
-                                .setAuthenticator(new JWTAuthenticator())
-                                .setPrefix("Bearer")
-                                .buildAuthFilter()));
+        environment.jersey().register(new AuthDynamicFeature(
+                new OAuthCredentialAuthFilter.Builder<UserPrincipal>()
+                        .setAuthenticator(new JwtAuthenticator())
+                        .setPrefix("Bearer")
+                        .buildAuthFilter()));
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(UserPrincipal.class));
 
-
-                        environment.jersey().register(new HelloResource());
+        environment.jersey().register(new HelloResource());
         environment.jersey().register(new AuthResource(authService));
         environment.jersey().register(new CorsFilter());
         environment.jersey()

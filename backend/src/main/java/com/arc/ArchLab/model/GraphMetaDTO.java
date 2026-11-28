@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GraphDTO {
+public class GraphMetaDTO {
 
     @NotNull
     private String title;

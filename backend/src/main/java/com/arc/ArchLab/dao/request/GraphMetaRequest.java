@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-public class GraphRequest {
+public class GraphMetaRequest {
 
     @NotNull
     private String title;

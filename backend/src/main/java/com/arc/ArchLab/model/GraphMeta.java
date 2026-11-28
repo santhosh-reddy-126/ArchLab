@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Graph {
+public class GraphMeta {
 
     @NotNull
     private String id;
