@@ -1,16 +1,16 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import AuthModal from './components/AuthModal.jsx';
 import Background from './components/Background.jsx';
+import GraphLibrary from './components/GraphLibrary.jsx';
 import Hero from './components/Hero.jsx';
 import Navbar from './components/Navbar.jsx';
 import Toast from './components/Toast.jsx';
-
-const STORAGE_KEY = 'archlab:session';
+import { SESSION_KEY } from './lib/api.js';
 
 function readSession() {
   try {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = window.localStorage.getItem(SESSION_KEY);
     return stored ? JSON.parse(stored) : null;
   } catch {
     return null;
@@ -31,6 +31,13 @@ export default function App() {
 
   const dismissToast = useCallback(() => setToast(null), []);
 
+  useEffect(() => {
+    if (!user) return;
+    window.requestAnimationFrame(() => {
+      document.getElementById('graphs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }, [user]);
+
   function openAuth(mode) {
     if (!mode) {
       notify('info', 'You are already signed in.');
@@ -43,7 +50,7 @@ export default function App() {
   function handleAuthenticated(data, mode) {
     if (mode === 'login') {
       const session = { name: data.name, token: data.jwtToken };
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+      window.localStorage.setItem(SESSION_KEY, JSON.stringify(session));
       setUser(session);
       setAuthOpen(false);
       notify('success', `Welcome back, ${session.name}. You are signed in.`);
@@ -54,8 +61,9 @@ export default function App() {
   }
 
   function handleLogout() {
-    window.localStorage.removeItem(STORAGE_KEY);
+    window.localStorage.removeItem(SESSION_KEY);
     setUser(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     notify('info', 'You have been signed out.');
   }
 
@@ -66,7 +74,8 @@ export default function App() {
       <Navbar user={user} onAuth={openAuth} onLogout={handleLogout} />
 
       <main>
-        <Hero onAuth={openAuth} />
+        {!user && <Hero onAuth={openAuth} />}
+        <GraphLibrary user={user} onAuth={openAuth} notify={notify} />
       </main>
 
       <AnimatePresence>

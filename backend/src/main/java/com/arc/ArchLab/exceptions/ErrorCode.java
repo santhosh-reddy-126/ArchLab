@@ -16,6 +16,11 @@ public enum ErrorCode {
             "Invalid email or password"
     ),
 
+    GRAPH_NOT_FOUND(
+            404,
+            "Graph not found"
+    ),
+
     INTERNAL_SERVER_ERROR(
             500,
             "Something went wrong!"

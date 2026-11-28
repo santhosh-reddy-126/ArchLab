@@ -1,0 +1,4 @@
+Next Week Plan:
+1. Add apis to add component into graph, for now only 3 components(Database, server and client)
+2. Add apis to add connections between them (with types of RPS(as mentioned read and write))
+3. add apis to simulate the graph until there

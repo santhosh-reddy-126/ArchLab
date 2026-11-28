@@ -32,6 +32,7 @@ export default function Navbar({ user, onAuth, onLogout }) {
         <div className="nav-actions">
           {user ? (
             <>
+              <a className="nav-link" href="#graphs">Workspace</a>
               <motion.span
                 className="user-pill"
                 initial={{ opacity: 0, scale: 0.8 }}
