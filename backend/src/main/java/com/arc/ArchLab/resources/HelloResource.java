@@ -1,6 +1,6 @@
 package com.arc.ArchLab.resources;
 
-import com.arc.ArchLab.JWT.UserPrincipal;
+import com.arc.ArchLab.auth.JWT.UserPrincipal;
 import io.dropwizard.auth.Auth;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

@@ -1,7 +1,7 @@
 package com.arc.ArchLab.resources;
 
 
-import com.arc.ArchLab.JWT.UserPrincipal;
+import com.arc.ArchLab.auth.JWT.UserPrincipal;
 import com.arc.ArchLab.dao.request.GraphMetaRequest;
 import com.arc.ArchLab.services.contracts.GraphService;
 import io.dropwizard.auth.Auth;

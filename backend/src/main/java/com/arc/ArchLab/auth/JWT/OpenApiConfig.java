@@ -1,4 +1,4 @@
-package com.arc.ArchLab.JWT;
+package com.arc.ArchLab.auth.JWT;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

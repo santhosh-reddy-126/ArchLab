@@ -11,10 +11,10 @@ public class JwtUtils {
     private static final String SECRET =
             "hwalioehfawkhoi293qwlcsdbfjwbekj";
 
-    private static final Long SIX_HOURS_MILLIS = (long) (24 * 60 * 60 * 1000);
+    private static final Long SIX_HOURS_MILLIS = (long) (6 * 60 * 60 * 1000);
 
     public static String generateToken(String userId, String username){
-        return Jwts.builder().subject(username).claim("userId",userId).issuedAt(new Date()).expiration(new Date(System.currentTimeMillis()+SIX_HOURS_MILLIS)).signWith(Keys.hmacShaKeyFor(
+        return Jwts.builder().subject(userId).claim("username",username).issuedAt(new Date()).expiration(new Date(System.currentTimeMillis()+SIX_HOURS_MILLIS)).signWith(Keys.hmacShaKeyFor(
                         SECRET.getBytes()),
                 Jwts.SIG.HS256).compact();
     }

@@ -1,7 +1,7 @@
 package com.arc.ArchLab;
 
-import com.arc.ArchLab.JWT.JwtAuthenticator;
-import com.arc.ArchLab.JWT.UserPrincipal;
+import com.arc.ArchLab.auth.JWT.JwtAuthenticator;
+import com.arc.ArchLab.auth.JWT.UserPrincipal;
 import com.arc.ArchLab.exceptions.ArchExceptionMapper;
 import com.arc.ArchLab.filters.CorsFilter;
 import com.arc.ArchLab.managed.DatabaseClients;

@@ -1,4 +1,4 @@
-package com.arc.ArchLab.JWT;
+package com.arc.ArchLab.auth.JWT;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

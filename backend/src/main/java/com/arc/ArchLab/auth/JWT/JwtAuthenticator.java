@@ -1,4 +1,4 @@
-package com.arc.ArchLab.JWT;
+package com.arc.ArchLab.auth.JWT;
 
 import com.arc.ArchLab.utils.JwtUtils;
 import io.dropwizard.auth.Authenticator;
@@ -12,8 +12,8 @@ public class JwtAuthenticator implements Authenticator<String, UserPrincipal> {
         try {
             var claims = JwtUtils.verify(token);
             return Optional.of(new UserPrincipal(
-                    claims.get("userId", String.class),
-                    claims.getSubject()
+                    claims.getSubject(),
+                    claims.get("userId", String.class)
             ));
         } catch (Exception exception) {
             return Optional.empty();
